@@ -25,6 +25,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='product/%Y/%m/%d', blank=True)
     available = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ('name',)
