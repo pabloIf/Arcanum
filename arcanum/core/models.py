@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(max_length=164, db_index=True)
@@ -7,10 +8,14 @@ class Category(models.Model):
     class Meta:
         ordering = ('name',)
         verbose_name = 'Category'
-        verbose_name_plural = 'Categorys'
+        verbose_name_plural = 'Categories'
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse("core:product_list_by_category", kwargs={"category_slug": self.slug})
+    
     
 class Product(models.Model):
     category = models.ForeignKey(
@@ -32,3 +37,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse("core:product_detail", kwargs={"id": self.id, "slug": self.slug})
+    
