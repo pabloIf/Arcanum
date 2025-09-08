@@ -13,7 +13,10 @@
             
             <h4 class="text my-3"><strong>{{ product.price }} $</strong></h4>
 
-            <!-- Форма для додавання у кошик -->
+            <form action="{% url 'basket:basket_add' product.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Add to basket</button>
+            </form>
             
             <div class="mt-4">
                 <p><strong>Category:</strong>
@@ -23,5 +26,28 @@
             </div>
         </div>
     </div>
+
+    {% if related_products %}
+        <div class="related-products mt-5">
+            <h2>Simular products</h2>
+            <div class="row">
+                {% for product in related_products %}
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100">
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="{{ product.get_absolute_url }}" class="text-decoration-none text-dark"> {{ product.name }}</a>
+                                </h5>
+                                <p class="card-text">{{ product.price }} $</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
 </div>
 {% endblock content %}

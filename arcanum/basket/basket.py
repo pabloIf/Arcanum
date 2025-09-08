@@ -21,7 +21,7 @@ class Basket:
                 'price': str(product.price)
             }
         
-        self.basket[product_id][quantity] += quantity
+        self.basket[product_id]['quantity'] += quantity
         self.save()
 
     def save(self):
@@ -48,10 +48,10 @@ class Basket:
             yield item
 
     def __len__(self):
-        return sum(item('quantity') for item in self.basket.values())
+        return sum(item['quantity'] for item in self.basket.values())
     
     def get_total_price(self):
-        return sum(item('price') * item('quantity') for item in self.basket.values())
+        return sum(item['price'] * item['quantity'] for item in self.basket.values())
     
     def clean(self):
         del self.session[settings.CART_SESSION_ID]
