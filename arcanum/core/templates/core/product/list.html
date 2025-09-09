@@ -8,13 +8,15 @@
     {% else %}
     {% if featured_product %}
     <h3>{% if category %}{{ category.name }}{% else %}Bestseller{% endif %}</h3>
-        <div class="featured-product mb-5 p-5 text-white rounded" style="background: url('{{ featured_product.image.url }}') no-repeat center center; background-size: cover;">
-            <div class="bg-dark bg-opacity-50 p-4 rounded">
-                <h2 class="display-5 fw-bold">{{ featured_product.name }}</h2>
-                <p class="lead">Price: ${{ featured_product.price }}</p>
-                <a href="{{ featured_product.get_absolute_url }}" class="btn btn-warning btn-lg">More</a>
+        <a href="{{ featured_product.get_absolute_url }}" class="text-decoration-none d-block">
+            <div class="featured-product mb-5 p-5 text-white rounded" style="background: url('{{ featured_product.image.url }}') no-repeat center center; background-size: cover;">
+                <div class="bg-dark bg-opacity-50 p-4 rounded">
+                    <h2 class="display-5 fw-bold">{{ featured_product.name }}</h2>
+                    <p class="lead">Price: ${{ featured_product.price }}</p>
+                    <div class="btn btn-warning btn-lg" onclick="window.location.href='{{ featured_product.get_absolute_url }}'">More</div>
+                </div>
             </div>
-        </div>
+        </a>
     {% endif %}
     <h3>{% if category %}{{ category.name }}{% else %}All items{% endif %}</h3>
         <div class="row row-cols-1 row-cols-md-4 g-3">
