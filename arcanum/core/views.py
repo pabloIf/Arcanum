@@ -10,10 +10,17 @@ def product_list(request, category_slug=None):
         category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=category)
 
+    featured_product = None
+    if not category:
+        featured_product = Product.objects.filter(is_featured=True).first()
+        if featured_product:
+            products = products.exclude(id=featured_product.id)
+
     return render(request, 'core/product/list.html',
                   {'products' : products,
                    'categories' : categories,
-                   'category' : category
+                   'category' : category,
+                   'featured_product': featured_product,
     })
 
 def product_detail(request, id, slug):
@@ -22,7 +29,7 @@ def product_detail(request, id, slug):
 
     return render(request, 'core/product/detail.html',
                   {"product" : product,
-                  'related_products' : related_products
+                  'related_products' : related_products,
     })
 
 

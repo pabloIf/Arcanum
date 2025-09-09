@@ -31,6 +31,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='product/%Y/%m/%d', blank=True)
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
+    is_featured = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('name',)

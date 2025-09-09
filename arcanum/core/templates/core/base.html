@@ -99,7 +99,7 @@
                                     <a href="{{ item.product.get_absolute_url }}">
                                         <img src="{{ item.product.image.url }}"
                                             class="img-fluid rounded me-3" 
-                                            style="width:50px; height:50px;"
+                                            style="width: 100%; object-fit: contain; max-height: 50px;"
                                             alt="{{ item.product.name }}">
                                     </a>
                                     <a href="{{ item.product.get_absolute_url }}" class="text-decoration-none text-dark"> {{ item.product.name }}</a>
