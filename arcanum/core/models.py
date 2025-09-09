@@ -4,9 +4,10 @@ from django.urls import reverse
 class Category(models.Model):
     name = models.CharField(max_length=164, db_index=True)
     slug = models.SlugField(max_length=164, unique=True)
+    order = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = ('name',)
+        ordering = ['order', 'name']
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
 
