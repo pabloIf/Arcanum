@@ -24,6 +24,15 @@ class Basket:
         self.basket[product_id]['quantity'] += quantity
         self.save()
 
+    def decrement(self, product):
+        product_id = str(product.id)
+
+        if product_id in self.basket:
+            self.basket[product_id]['quantity'] -= 1
+            if self.basket[product_id]['quantity'] < 1:
+                del self.basket[product_id]
+        self.save()
+
     def save(self):
         self.session.modified = True
 

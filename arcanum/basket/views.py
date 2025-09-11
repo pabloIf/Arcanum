@@ -11,6 +11,13 @@ def basket_add(request, product_id):
     return redirect(f"{request.META.get('HTTP_REFERER', '/')}?cart_open=1")
 
 @require_POST
+def basket_decrement(request, product_id):
+    basket = Basket(request)
+    product = get_object_or_404(Product, id=product_id)
+    basket.decrement(product=product)
+    return redirect(f"{request.META.get('HTTP_REFERER', '/')}?cart_open=1")
+
+@require_POST
 def basket_remove(request, product_id):
     basket = Basket(request)
     product = get_object_or_404(Product, id=product_id)

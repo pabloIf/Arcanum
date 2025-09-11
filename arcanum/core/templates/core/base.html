@@ -61,17 +61,17 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h5>Shop</h5>
-                    <p>The best shop</p>
+                    <h5>Indomie</h5>
+                    <p>The best industrial shop</p>
                 </div>
                 <div class="col-md-4">
                     <h5>contacts</h5>
-                    <p>Email: info@gmail.com<br>fhone: +380956568639</p>
+                    <p>Email: indomieyoto@gmail.com<br>fhone: +380956568639</p>
                 </div>
                 <div class="col-md-4">
                     <h5>We in socials</h5>
                     <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="text-white me-2"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.instagram.com/pablo_saltikov?igsh=MW9ha3VqOTFtYmx6OQ%3D%3D&utm_source=qr" class="text-white me-2"><i class="bi bi-instagram"></i></a>
                     <a href="#" class="text-white me-2"><i class="bi bi-telegram"></i></a>
                     <a href="#" class="text-white"><i class="bi bi-vk"></i></a>
                 </div>
@@ -94,7 +94,7 @@
                 <div class="modal-body">
                     <ul class="list-group">
                         {% for item in basket %}
-                            <li class="list-group-item d-flex align-items-center">
+                            <li class="list-group-item d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-center">
                                     <a href="{{ item.product.get_absolute_url }}">
                                         <img src="{{ item.product.image.url }}"
@@ -102,13 +102,39 @@
                                             style="width: 100%; object-fit: contain; max-height: 50px;"
                                             alt="{{ item.product.name }}">
                                     </a>
-                                    <a href="{{ item.product.get_absolute_url }}" class="text-decoration-none text-dark"> {{ item.product.name }}</a>
+                                    <a href="{{ item.product.get_absolute_url }}" class="text-decoration-none text-dark">
+                                        {{ item.product.name }}
+                                    </a>
                                 </div>
-                                <div class="ms-auto d-flex align-items-center">
 
-                                    <input type="number" name="quantity_{{ item.product.id }}" value="{{ item.quantity }}" min="1" class="form-control me-3" style="width:60px;">
+                                <div class="d-flex align-items-center">
+                                    <form action="{% url 'basket:basket_decrement' item.product.id %}" method="post" class="d-inline me-1 d-flex align-items-center">
+                                        {% csrf_token %}
+                                        {% if item.quantity == 1 %}
+                                            <button type="submit" class="btn btn-sm text-dark disabled" style="background: transparent; border: none; padding: 0; width: 25px; height: 25px; text-align: center;">
+                                                <strong>-</strong>
+                                            </button>
+                                        {% else %}
+                                            <button type="submit" class="btn btn-sm text-dark" style="background: transparent; border: none; padding: 0; width: 25px; height: 25px; text-align: center;">
+                                                <strong>-</strong>
+                                            </button>
+                                        {% endif %}
+                                    </form>
 
-                                    <span class="me-2">{{ item.total_price }}$</span>
+                                    <span class="mx-2 px-2 py-1 border rounded text-center d-flex justify-content-center align-items-center" style="display:inline-block; width:30px;">
+                                        {{ item.quantity }}
+                                    </span>
+
+                                    <form action="{% url 'basket:basket_add' item.product.id %}" method="post" class="d-inline ms-1 d-flex align-items-center">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm text-dark" style="background: transparent; border: none; padding: 0; width: 25px; height: 25px; text-align: center;">
+                                            <strong>+</strong>
+                                        </button>
+                                    </form>
+
+                                    <span class="mx-2 text-end text-nowrap" style="display:inline-block; width:80px; height:25px;">
+                                        {{ item.total_price }}$
+                                    </span>
                                     <form action="{% url 'basket:basket_remove' item.product.id %}" method="post" style="display:inline;">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
@@ -116,7 +142,7 @@
                                 </div>
                             </li>
                         {% empty %}
-                            <li class="list-group-item">Empty</li>
+                            <li class="list-group-item list-group-item-warning">Empty</li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -124,7 +150,7 @@
                 <!-- Footer -->
                 <div class="modal-footer">
                     <strong>Total: {{ basket.get_total_price }}$</strong>
-                    <button type="button" class="btn btn-primary" disabled>Make an order</button>
+                    <button type="button" class="btn btn-warning" disabled>Make an order</button>
                 </div>
 
             </div>
@@ -135,6 +161,11 @@
 
 
     <script>
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        });
         const param = new URLSearchParams(window.location.search)
         if (param.get('cart_open') === '1') {
             new bootstrap.Modal(document.getElementById('basketModal')).show();

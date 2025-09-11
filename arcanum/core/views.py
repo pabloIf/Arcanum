@@ -3,7 +3,7 @@ from .models import Category, Product
 
 def product_list(request, category_slug=None):
     categories = Category.objects.all()
-    products = Product.objects.filter(available=True)
+    products = Product.objects.filter(available=True).exclude(image='')
 
     category = None
     if category_slug:
