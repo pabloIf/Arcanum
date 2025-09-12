@@ -1,6 +1,62 @@
 {% extends "core/base.html" %}
 
 {% block content %}
+
+{% if query %}
+    <h3>Search results for "{{ query }}"</h3>
+{% else %}
+    {% if featured_product %}
+        <h3>Bestseller</h3>
+        <a href="{{ featured_product.get_absolute_url }}" class="text-decoration-none d-block">
+            <div class="featured-product mb-5 p-5 text-white rounded" style="background: url('{{ featured_product.image.url }}') no-repeat center center; background-size: cover;">
+                <div class="bg-dark bg-opacity-50 p-4 rounded">
+                    <h2 class="display-5 fw-bold">{{ featured_product.name }}</h2>
+                    <p class="lead">Price: ${{ featured_product.price }}</p>
+                    <div class="btn btn-warning btn-lg" onclick="window.location.href='{{ featured_product.get_absolute_url }}'">More</div>
+                </div>
+            </div>
+        </a>
+        <h3>{% if category %}{{ category.name }}{% else %}All items{% endif %}</h3>
+    {% else %}
+        <h3>{% if category %}{{ category.name }}{% else %}All items{% endif %}</h3>
+    {% endif %}
+{% endif %}
+
+<div class="row row-cols-1 row-cols-md-4 g-3">
+    {% for product in products %}
+    <div class="col">
+        <div class="card h-100">
+            <a href="{{ product.get_absolute_url }}">
+                <img src="{{ product.image.url }}" 
+                    class="card-img-top" 
+                    alt="{{ product.name }}"
+                    style="width: 100%; object-fit: contain; max-height: 310px;">
+            </a>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">
+                    <a href="{{ product.get_absolute_url }}" class="text-decoration-none text-dark">{{ product.name }}</a>
+                </h5>
+                        
+                <p class ="card-text">{{ product.price }} $</p>
+
+                <a href="{{ product.get_absolute_url }}" class="btn btn-outline-dark w-100 mt-auto">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="alert alert-warning" role="alert">
+        No products found.
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}
+
+
+
+
+{% comment %} {% extends "core/base.html" %}
+
+{% block content %}
     {% if not products %}
         <div class="alert alert-warning" role="alert">
             No products found in this category.
@@ -43,4 +99,4 @@
             {% endfor %}
         </div>
     {% endif %}
-{% endblock content %}
+{% endblock content %} {% endcomment %}

@@ -38,13 +38,13 @@
                     {% endfor %}
                 </ul>
                 <div class="d-flex align-items-center">
-                    <form class="d-flex me-3" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                    <form class="d-flex me-3" role="search" method="get" action="{% url 'core:product_list' %}">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{ query }}"/>
                         <button class="btn btn-warning" type="submit">Find</button>
                     </form>
                     <button type="button" class="btn btn-light position-relative" data-bs-toggle="modal" data-bs-target="#basketModal">
                         <i class="bi bi-cart"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
                             {{ basket|length }}
                         </span>
                     </button>
