@@ -20,13 +20,13 @@ Simple online shop built with **Django 5**, featuring product catalog, categorie
 ![Basket](screenshots/basket.png)
 
 ## Technologies
-Django 5
-Bootstrap 5
-SQLite (default)
+- Django 5
+- Bootstrap 5
+- SQLite (default)
 
 ## Installation
 1. Clone the repo:
-   ```bash
+```bash
    git clone https://github.com/yourname/django-shop.git
    cd django-shop
 ```
